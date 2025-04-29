@@ -1,0 +1,47 @@
+openapi: 3.0.4
+info:
+  title: Twitch Collector - OpenAPI 3.0 specification
+  version: 0.0.1
+paths:
+  /api/v1/record/{login}:
+    post:
+      tags:
+        - Recordings
+      operationId: StartRecording
+      parameters:
+        - name: login
+          in: path
+          required: yes
+          schema:
+            type: string
+      responses:
+        200:
+          description: Started recording
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: Recording ID
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+        details:
+          type: string
